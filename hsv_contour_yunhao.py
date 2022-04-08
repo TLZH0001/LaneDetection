@@ -90,7 +90,7 @@ def videoLanes():
             cap.release()
             break
         
-        print(progress(cap))
+        print('video',progress(cap) * 100,'%')
 
         dilated = lanesDetection(frame)
         cv.imshow('raw',frame)
