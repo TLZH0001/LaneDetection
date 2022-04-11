@@ -14,12 +14,12 @@ while not cap.isOpened():
 pos_frame = cap.get(cv2.CAP_PROP_POS_FRAMES)
 while True:
     flag, frame = cap.read()
-    cap.read()
-    cap.read()
-    cap.read()
-    cap.read()
-    cap.read()
-    cap.read()
+#     cap.read()
+#     cap.read()
+#     cap.read()
+#     cap.read()
+#     cap.read()
+#     cap.read()
     if flag:
         hsv_img = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         # Threshold the HSV image to get only road colors
