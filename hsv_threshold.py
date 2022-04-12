@@ -82,42 +82,6 @@ def on_high_V_thresh_trackbar(val):
     high_V = max(high_V, low_V+1)
     cv2.setTrackbarPos(high_V_name, window_detection_name, high_V)
 
-def drawRects(frame, contours):
-    tempPts = []
-    for cnt in contours:
-        rect = cv2.minAreaRect(cnt['cont'])
-        boxpts = cv2.boxPoints(rect)
-        box = np.int0(boxpts)
-        cv2.drawContours(frame,[box],0,(0,0,255),1)
-        cv2.drawContours(frame, [cnt['cont']],0,(0,255,0),1)
-        cv2.drawContours(frame, [cv2.convexHull(cnt['cont'])],0,(255,0,0),1)
-        tempPts.append(rect[0])
-        cv2.putText(frame, str(cnt['heur']), (int(rect[0][0]), int(rect[0][1])), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255))
-    if len(tempPts) > 1 and allLarger(heur_thresh):
-        global paused
-        if pauseWhenFound:
-            paused = True
-        avgPt = getAvgPt(midPt(tempPts[0], tempPts[1]))
-        cv2.circle(frame, (avgPt[0], avgPt[1]), 10, (0,0,255), -1)
-
-def midPt(pt1, pt2):
-    return ((pt1[0] + pt2[0]) / 2, (pt1[1] + pt2[1]) / 2)
-
-def getAvgPt(pt):
-    points.append(pt)
-    exes = list(map(lambda x: x[0], points))
-    whys = list(map(lambda y: y[1], points))
-
-    if len(points) > 50:
-        del points[:10]
-    return (int(sum(exes) / len(exes)), int(sum(whys) / len(whys)))
-
-def allLarger(thresh):
-    for cnt in likelyGate:
-        if cnt['heur'] < thresh:
-            return False
-    return True
-
 parser = argparse.ArgumentParser(description='Code for Thresholding Operations using inRange tutorial.')
 parser.add_argument('camera', help='Camera devide number.', default=0, type=str)
 args = parser.parse_args()
