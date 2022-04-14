@@ -23,7 +23,6 @@ def floodfilled(frame):
     print(type(mask))
     cv2.floodFill(img_hsv, mask, seedPoint=seed, newVal=(255, 0, 0), \
         loDiff=tuple(thre), upDiff=tuple(thre), flags= cv2.FLOODFILL_FIXED_RANGE)
-    # cv2.circle(img_hsv, seed, 2, (0, 255, 0), cv2.FILLED, cv2.LINE_AA)
     mask = mask * 255
     return img_hsv, mask[1:-1, 1:-1]
 
